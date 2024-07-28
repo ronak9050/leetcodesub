@@ -16,15 +16,11 @@ public:
             int time=q.front().second;
             q.pop();
             
-            if(cur==n && time>last){
-                last=time;
-                ct++;
-                if(ct==2) return last;
-            }
-            else if(cur==n) continue;
+            if(cur==n && time>path[cur] && vis[cur]==1) return time;
             if(path[cur]>=time) continue;
             vis[cur]++;
             path[cur]=time;
+            
             for(auto &e:g[cur]){
                 if(vis[e]>=2) continue;
                 int pt;
