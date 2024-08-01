@@ -2,7 +2,7 @@ class Solution {
 public:
     int subarraysWithKDistinct(vector<int>& a, int k) {
         int n=a.size(),i=0,j=0,ans=0;
-        map<int,int> mp;
+        vector<int> mp(n+1,0);
         unordered_set<int> st;
         while(i<n){
             if(st.size()<k){
