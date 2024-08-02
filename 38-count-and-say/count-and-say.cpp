@@ -1,24 +1,42 @@
 class Solution {
 public:
-    string countAndSay(int n) {
-        if(n==1) return "1";
-        string s=countAndSay(n-1);
-        int ct=0;
-        char c=s[0];
-        string ans;
-        for(int i=0; i<s.size(); i++){
-            if(s[i]==c) ct++;
+    void str(string& ans){
+        string x;
+        int cnt=1;
+        char a;
+        for(int i=0; i<ans.size()-1; i++){
+            a=ans[i];
+            if(ans[i]==ans[i+1]){
+                cnt++;
+                //cout<<cnt<<endl;
+            }
             else{
-                string num=to_string(ct);
-                for(auto &e:num) ans.push_back(e);
-                ans.push_back(c);
-                ct=1;
-                c=s[i];
+                //cout<<"here"<<endl;
+                x+=char(cnt+'0');
+                x+=ans[i];
+                //cout<<x<<endl;
+                cnt=1;
             }
         }
-        string num=to_string(ct);
-        for(auto &e:num) ans.push_back(e);
-        ans.push_back(c);
+        if(ans[ans.size()-2]!=ans[ans.size()-1]){x+='1'; x+=ans[ans.size()-1];}
+        else{
+            //cout<<"here"<<endl;
+            x+=char(cnt+'0');
+            x+=a;
+            cout<<x<<endl;
+            cnt=1;
+        }
+        ans.clear();
+        //cout<<x<<" "<<"here"<<endl;
+        ans=x;
+    }
+    string countAndSay(int n) {
+        if(n==1){return "1";}
+        string ans="11";
+        n-=2;
+        while(n--){
+            str(ans);
+        }
         return ans;
     }
 };
