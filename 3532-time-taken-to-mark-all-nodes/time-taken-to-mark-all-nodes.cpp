@@ -1,28 +1,33 @@
 class Solution {
 public:
-    
-    pair<int,int> dfs(int ind,int par,int t,vector<vector<int>>&g){
-        int ans=t;
-        int retind=ind;
+    int dfs(int ind,int par,vector<vector<int>>&g,vector<vector<int>>&dp){
         for(auto &e:g[ind]){
             if(e==par) continue;
-            pair<int,int> cur=dfs(e,ind,t+1+(e%2==0),g);
-            if(ans<cur.first){
-                ans=cur.first;
-                retind=cur.second;
+
+            int num=(e%2? 1:2)+dfs(e,ind,g,dp);
+            if(num>dp[ind][0]){
+                dp[ind][1]=dp[ind][0];
+                dp[ind][0]=num;
             }
+            else if(num>dp[ind][1]) dp[ind][1]=num;
         }
-        return {ans,retind};
+        return dp[ind][0];
     }
 
-    void dfs2(int ind,int par,int t,vector<vector<int>>&g,vector<int>&time){
-        time[ind]=t;
+    void dfs2(int ind,int par,int t,vector<vector<int>>&g,vector<vector<int>>&dp,vector<int>&ans){
+        ans[ind]=max(dp[ind][0],t);
+        int pa=(ind%2? 1:2);
         for(auto &e:g[ind]){
             if(e==par) continue;
-            dfs2(e,ind,t+1+(e%2==0),g,time);
+            
+            int curr=dp[e][0]+(e%2? 1:2);
+            int x;
+            if(curr==dp[ind][0]) x=dp[ind][1];
+            else x=dp[ind][0];
+            dfs2(e,ind,max(t+pa,x+pa),g,dp,ans);
         }
     }
-
+    
     vector<int> timeTaken(vector<vector<int>>& edges) {
         int n=edges.size()+1;
         vector<vector<int>> g(n);
@@ -30,25 +35,11 @@ public:
             g[e[0]].push_back(e[1]);
             g[e[1]].push_back(e[0]);
         }
-        pair<int,int> d1=dfs(0,-1,0,g);
-        int st=d1.second;
-        pair<int,int> d2=dfs(st,-1,0,g);
-        int end=d2.second;
+        vector<vector<int>> dp(n,vector<int>(2,0));
+        vector<int> ans(n,0);
+        dfs(0,-1,g,dp);
 
-        vector<int> time1(n,0),time2(n,0),ans(n,0);
-        dfs2(st,-1,0,g,time1);
-        dfs2(end,-1,0,g,time2);
-
-        for(int i=0; i<n; i++){
-            int num1=time1[i];
-            if(i&1 && st%2==0) num1++;
-            else if(i%2==0 && st&1) num1--;
-
-            int num2=time2[i];
-            if(i&1 && end%2==0) num2++;
-            else if(i%2==0 && end&1) num2--;
-            ans[i]=max(num1,num2);
-        }
+        dfs2(0,-1,0,g,dp,ans);
         return ans;
     }
 };
