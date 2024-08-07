@@ -6,22 +6,25 @@ public:
 
     string func(int n){
         string ans;
+        vector<string> t(4);
         if(n/100){
-            ans=one[n/100]+" Hundred ";
+            t[0]= one[n/100]+" Hundred ";
             n=n%100;
         }
 
         if(eleth.find(n)!=eleth.end()){
-            ans=ans+eleth[n]+" ";
+            t[1]=eleth[n];
+            return t[0]+t[1];
         }
         else{
             if(n/10){
-                ans=ans+ten[n/10]+" ";
+                t[2]=ten[n/10]+" ";
                 n=n%10;
             }
             if(n){
-                ans=ans+one[n]+" ";
+                t[3]=one[n]+" ";
             }
+            ans =t[0]+t[2]+t[3];
         }
         ans.pop_back();
         return ans;
@@ -30,21 +33,23 @@ public:
     string numberToWords(int n) {
         if(!n) return "Zero";
         string ans;
+        vector<string> t(4);
         if(n/1000000000){
-            ans=ans+func(n/1000000000)+" Billion ";
+            t[0]=func(n/1000000000)+" Billion ";
             n=n%1000000000;
         }
         if(n/1000000){
-            ans=ans+func(n/1000000)+" Million ";
+            t[1]=func(n/1000000)+" Million ";
             n=n%1000000;
         }
         if(n/1000){
-            ans=ans+func(n/1000)+" Thousand ";
+            t[2]=func(n/1000)+" Thousand ";
             n=n%1000;
         }
         if(n){
-            ans=ans+func(n)+" ";
+            t[3]=func(n)+" ";
         }
+        ans=t[0]+t[1]+t[2]+t[3];
         ans.pop_back();
         return ans;
     }
