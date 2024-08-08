@@ -1,37 +1,35 @@
 class Solution {
 public:
-    vector<vector<int>> spiralMatrixIII(int r, int c, int rst, int cst) {
-        vector<vector<int>> ans(r*c,vector<int>(2));
-        int pt=0,top=rst,left=cst-1,bot=rst+1,right=cst+1,i;
-        cout<<top<<" "<<bot<<" "<<left<<" "<<right<<endl;
+    vector<vector<int>> spiralMatrixIII(int rows, int cols, int rStart, int cStart) {
+        int i = rStart, j = cStart;
+        int diri = 0, dirj = 1; // directions to move
+        int twice = 2;
+        vector<vector<int>> res;
+        int moves = 1;
+        int next_moves = 2;
 
-        while(pt<r*c){
-            for(i=left+1; i<=right; i++){
-                if(i<0) i=0;
-                if(i>=c || top<0) break;
-                if(pt<r*c) ans[pt++]={top,i};
+        while (res.size() < rows * cols) {
+            if (i >= 0 && i < rows && j >= 0 && j < cols) {
+                res.push_back({i, j});
             }
-            top--;
-            for(i=top+2; i<=bot; i++){
-                if(i<0) i=0;
-                if(i>=r || right>=c) break;
-                if(pt<r*c) ans[pt++]={i,right};
+
+            i += diri;
+            j += dirj;
+            moves -= 1;
+            if (moves == 0) {
+                int temp = diri;
+                diri = dirj;
+                dirj = -temp; // right direction
+                twice -= 1;
+                if (twice == 0) {
+                    twice = 2;
+                    moves = next_moves;
+                    next_moves += 1;
+                } else {
+                    moves = next_moves - 1;
+                }
             }
-            right++;
-            for(i=right-2; i>=left; i--){
-                if(i>=c) i=c-1;
-                if(i<0 || bot>=r) break;
-                if(pt<r*c) ans[pt++]={bot,i};
-            }
-            bot++;
-            for(i=bot-2; i>top; i--){
-                if(i>=r) i=r-1;
-                if(i<0 || left<0) break;
-                if(pt<r*c) ans[pt++]={i,left};
-            }
-            left--;
-            cout<<top<<" "<<bot<<" "<<left<<" "<<right<<endl;
         }
-        return ans;
+        return res;
     }
 };
