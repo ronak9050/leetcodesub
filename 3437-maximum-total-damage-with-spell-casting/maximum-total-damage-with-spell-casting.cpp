@@ -14,7 +14,6 @@ public:
     }
 
     long long maximumTotalDamage(vector<int>& nums) {
-        sort(nums.begin(),nums.end());
         unordered_map<ll,ll> mp;
         for(int i=0; i<nums.size(); i++) mp[nums[i]]++;
         vector<ll> a(mp.size());
