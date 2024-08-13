@@ -10,8 +10,8 @@ public:
         for(int i=0; i<n-1; i++){
             pr.push_back({ver[i],0});
         }
-        sort(pr.begin(),pr.end());
-        reverse(pr.begin(),pr.end());
+        sort(pr.begin(),pr.end(),greater<vector<ll>>());
+        // reverse(pr.begin(),pr.end());
 
         ll ans=0; // 1-> h++ 0->v++
         for(int i=0; i<pr.size(); i++){
