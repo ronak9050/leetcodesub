@@ -1,9 +1,9 @@
 class Solution {
 public:
     bool doesAliceWin(string s) {
-        unordered_map <char,int> mp={{'a',1},{'e',1},{'i',1},{'o',1},{'u',1}};
-        int ct=0;
-        for(auto &e:s) if(mp[e]) return 1;
+        vector<int> vis(26,0);
+        vis[0]=1;vis[4]=1;vis[8]=1;vis[14]=1;vis[20]=1;
+        for(auto &e:s) if(vis[e-'a']) return 1;
         return 0;
     }
 };
