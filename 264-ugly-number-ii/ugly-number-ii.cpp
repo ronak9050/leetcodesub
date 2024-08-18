@@ -12,9 +12,9 @@ public:
             n--;
             mp[cur]=1;
             if(n==0) return cur;
-            pq.push(cur*2);
-            pq.push(cur*3);
-            pq.push(cur*5);
+            if(!mp[cur*2]) pq.push(cur*2);
+            if(!mp[cur*3]) pq.push(cur*3);
+            if(!mp[cur*5]) pq.push(cur*5);
         }
         return 1;
     }
