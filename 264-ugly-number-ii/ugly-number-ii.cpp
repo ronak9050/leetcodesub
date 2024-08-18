@@ -4,7 +4,7 @@ public:
     int nthUglyNumber(int n) {
         priority_queue<ll,vector<ll>,greater<ll>> pq;
         pq.push(1);
-        map<ll,int> mp;
+        unordered_map<ll,int> mp;
         while(n){
             ll cur=pq.top();
             pq.pop();
