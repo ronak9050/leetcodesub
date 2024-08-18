@@ -2,48 +2,37 @@
 
 class Solution {
 public:
-    
-    ll func(int ct,int rem,set<vector<ll>> st,vector<int> &row,vector<int> &col){
-        if(rem==0) return 0;
-        if(ct==0 || st.empty()) return -1e15;
-        
-        ll ans=-1e15;
-        auto it=st.end();
-        it--;
-        while(st.size() && (row[it->at(1)] || col[it->at(2)])){
-            st.erase(it);
-            it=st.end();
-            if(st.size()) it--;
-            else break;
-        }
-        if(st.size()==0) return -1e15;
-        it=st.end();
-        it--;
-        auto cur=*it;
-        st.erase(it);
-        
-        ans=func(ct-1,rem,st,row,col);
-        row[cur[1]]=1;
-        col[cur[2]]=1;
-        ans=max(ans,cur[0]+func(ct-1,rem-1,st,row,col));
-        row[cur[1]]=0;
-        col[cur[2]]=0;
-        return ans;
-    }
         
     long long maximumValueSum(vector<vector<int>>& a) {
         ll n=a.size(),m=a[0].size();
-        set<vector<ll>> st;
+        vector<vector<ll>> pos;
         for(int i=0; i<n; i++){
+            set<vector<ll>> st;
             for(int j=0; j<m; j++){
                 st.insert({a[i][j],i,j});
             }
+            auto it=st.end();
+            it--;
+            for(int j=0; j<3; j++) {
+                pos.push_back(*it);
+                it--;
+            }
         }
-        vector<int> row(n,0),col(m,0);
-        while(st.size()>601){
-            st.erase(st.begin());
+        sort(pos.begin(),pos.end(),greater<vector<ll>>());
+        ll ans=-1e15;
+        int sz=pos.size();
+        n=min(sz,301);
+        for(int i=0; i<4; i++){
+            for(int j=i+1; j<n; j++){
+                for(int k=j+1; k<n; k++){
+                    if(pos[i][1]!=pos[j][1] && pos[j][1]!=pos[k][1] && pos[k][1]!=pos[i][1]){
+                        if(pos[i][2]!=pos[j][2] && pos[j][2]!=pos[k][2] && pos[k][2]!=pos[i][2]){
+                            ans=max(ans,pos[i][0]+pos[j][0]+pos[k][0]);
+                        }
+                    }
+                }
+            }
         }
-        ll ans=func(6,3,st,row,col);
         return ans;
     }
 };
