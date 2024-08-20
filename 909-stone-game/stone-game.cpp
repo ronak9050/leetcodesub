@@ -17,6 +17,7 @@ public:
     }
 
     bool stoneGame(vector<int>& a) {
+        return true;
         int n=a.size();
         vector<vector<vector<int>>> dp(n,vector<vector<int>>(n,vector<int>(2,-1)));
         int sum=accumulate(a.begin(),a.end(),0);
