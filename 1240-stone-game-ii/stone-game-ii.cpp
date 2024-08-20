@@ -26,7 +26,7 @@ public:
 
     int stoneGameII(vector<int>& a) {
         int n=a.size();
-        vector<vector<vector<int>>> dp(n,vector<vector<int>>(2*n+1,vector<int>(2,-1)));
+        vector<vector<vector<int>>> dp(n,vector<vector<int>>(n+1,vector<int>(2,-1)));
         return func(0,1,1,a,dp);
     }
 };
