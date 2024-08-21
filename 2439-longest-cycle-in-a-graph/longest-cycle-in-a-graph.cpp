@@ -1,42 +1,46 @@
 class Solution {
 public:
-    void dfs(int ind,vector<int>&a,vector<int> &vis,vector<int>&path){
-        path.push_back(ind);
-        if(vis[ind] || a[ind]==-1) return;
-        vis[ind]=1;
-        dfs(a[ind],a,vis,path);
-    }
+    vector<int> m;
+    vector<vector<int>> adj;
+    vector<int> dp;
+    int n;
 
-    int cycle(vector<int>&path){
-        int n=path.size();
-        for(int i=0; i<n-1; i++){
-            if(path[i]==path[n-1]) return n-1-i;
+    int dfs(int x, int k) {
+        if (dp[x] != -1)
+            return dp[x];
+        if (m[x] != -1)
+            return k - m[x];
+
+        m[x] = k;
+        int ans = 0;
+        for (auto& c : adj[x]) {
+            ans = max(ans, dfs(c, k + 1));
         }
-        return 0;
+        dp[x] = ans;
+        return ans;
     }
 
     int longestCycle(vector<int>& a) {
-        int n=a.size();
-        vector<int> indeg(n,0);
-        for(int i=0; i<n; i++){
-            if(a[i]!=-1) indeg[a[i]]++;
-        }
-        vector<int> vis(n,0);
-        int ans=0;
-        for(int i=0; i<n; i++){
-            if(!indeg[i]){
-                vector<int> path;
-                dfs(i,a,vis,path);
-                ans=max(ans,cycle(path));
+        this->n = a.size();
+        adj.resize(n);
+        m.assign(n, -1);
+        dp.assign(n, -1);
+      
+
+        for (int i = 0; i < n; i++) {
+            if (a[i] != -1 && a[i] < n) {
+                adj[i].push_back(a[i]);
             }
         }
-        for(int i=0; i<n; i++){
-            if(!vis[i]){
-                vector<int> path;
-                dfs(i,a,vis,path);
-                ans=max(ans,cycle(path));
+
+        int ans = -1;
+        for (int i = 0; i < n; i++) {
+            if (dp[i] == -1) {
+                ans = max(ans, dfs(i, 0));
             }
         }
-        return ans==0? -1:ans;
+        if(ans==0)
+         ans=-1;
+        return ans;
     }
 };
