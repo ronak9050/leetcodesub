@@ -1,22 +1,32 @@
 class Solution {
 public:
-    int memo[200][200][200] = {};
-    int removeBoxes(vector<int>& boxes) {
-        return dp(boxes, 0, boxes.size() - 1, 0);
-    }
-    int dp(vector<int>& boxes, int l, int r, int k) {
-        if (l > r) return 0;
-        if (memo[l][r][k] > 0) return memo[l][r][k];
-        int lOrg = l, kOrg = k;
 
-        while (l+1 <= r && boxes[l] == boxes[l+1]) { // Increase both `l` and `k` if they have consecutive colors with `boxes[l]`
-            l += 1;
-            k += 1;
+    int func(int i,int j,int ext,vector<vector<int>> &grp, vector<vector<vector<int>>>&dp){
+        if(i>=j) return 0;
+        if(dp[i][j][ext]!=-1) return dp[i][j][ext];
+        int ans=((ext+grp[i][0])*(ext+grp[i][0]))+func(i+1,j,0,grp,dp);
+        for(int p=i+2; p<j; p++){
+            if(grp[i][1]==grp[p][1]){
+                ans=max(ans,func(i+1,p,0,grp,dp)+func(p,j,ext+grp[i][0],grp,dp));
+            }
         }
-        int ans = (k+1) * (k+1) + dp(boxes, l+1, r, 0); // Remove all boxes which has the same with `boxes[l]`
-        for (int m = l + 1; m <= r; ++m) // Try to merge non-contiguous boxes of the same color together
-            if (boxes[m] == boxes[l])
-                ans = max(ans, dp(boxes, m, r, k+1) + dp(boxes, l+1, m-1, 0));
-        return memo[lOrg][r][kOrg] = ans;
+        return dp[i][j][ext]=ans;
+    }
+    
+    int removeBoxes(vector<int>& a) {
+        int n=a.size();
+        vector<vector<int>> grp;
+        int ct=1;
+        for(int i=1; i<n; i++){
+            if(a[i]==a[i-1]) ct++;
+            else{
+                grp.push_back({ct,a[i-1]});
+                ct=1;
+            }
+        }
+        grp.push_back({ct,a[n-1]});
+        vector<vector<vector<int>>> dp(grp.size()+1,vector<vector<int>>(grp.size()+1,vector<int>(101,-1)));
+        int ans=func(0,grp.size(),0,grp,dp);
+        return ans;
     }
 };
