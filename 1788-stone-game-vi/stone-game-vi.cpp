@@ -6,9 +6,10 @@ public:
 
     int stoneGameVI(vector<int>& a, vector<int>& b) {
         int n = a.size();
-        vector<vector<int>> pos(n);
+        vector<vector<int>> pos(n,vector<int>(2));
         for (int i = 0; i < n; i++) {
-            pos[i]={a[i],b[i]};
+            pos[i][0]=a[i];
+            pos[i][1]=b[i];
         }
 
         sort(pos.begin(), pos.end(), cmp);
