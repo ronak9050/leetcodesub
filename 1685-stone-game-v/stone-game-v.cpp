@@ -6,10 +6,9 @@ public:
         int ans=0,sum=a[j]-(i>0? a[i-1]:0);
         for(int p=i; p<=j; p++){
             int cur=a[p]-(i>0? a[i-1]:0);
-            if(cur<sum/2) ans=max(ans,cur+func(i,p,a,dp));
-            else if(cur==sum/2){
-                if(sum%2==0) ans=max({ans,sum/2+func(p+1,j,a,dp),sum/2+func(i,p,a,dp)});
-                else ans=max(ans,cur+func(i,p,a,dp));
+            if(cur<=sum/2){
+                ans=max(ans,cur+func(i,p,a,dp));
+                if(sum%2==0 && cur==sum/2) ans=max(ans,sum/2+func(p+1,j,a,dp));
             }
             else ans=max(ans,sum-cur+func(p+1,j,a,dp));
         }
