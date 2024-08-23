@@ -1,23 +1,18 @@
 class Solution {
 public:
-    static bool cmp(vector<int>& a, vector<int>& b) {
-        return a[0] + a[1] > b[0] + b[1];
-    }
 
     int stoneGameVI(vector<int>& a, vector<int>& b) {
         int n = a.size();
-        vector<vector<int>> pos(n,vector<int>(2));
+        priority_queue<vector<int>> pq;
         for (int i = 0; i < n; i++) {
-            pos[i][0]=a[i];
-            pos[i][1]=b[i];
+            pq.push({a[i]+b[i],a[i],b[i]});
         }
-
-        sort(pos.begin(), pos.end(), cmp);
 
         int sum=0;
         for (int i=0; i<n; i++) {
-            if (i&1) sum-=pos[i][1];
-            else sum+=pos[i][0];
+            if (i&1) sum-=pq.top()[2];
+            else sum+=pq.top()[1];
+            pq.pop();
         }
 
         if(sum) return (sum>0? 1:-1);
