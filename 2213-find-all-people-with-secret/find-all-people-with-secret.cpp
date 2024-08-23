@@ -21,7 +21,7 @@ public:
             st.insert(cur);
             for(auto &e:g[cur]){
                 int v=e[1],t=e[0];
-                if(t>=tcur) q.push({v,t});
+                if(t>=tcur && vis[v]>t) q.push({v,t});
             }
         }
         vector<int> ans;
