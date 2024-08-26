@@ -8,7 +8,7 @@ public:
     }
 
     bool stoneGame(vector<int>& a) {
-        // return 1;
+        return 1;
         int n=a.size();
         vector<vector<int>> dp(n,vector<int>(n,-1));
         return func(0,n-1,a,dp)>0;
