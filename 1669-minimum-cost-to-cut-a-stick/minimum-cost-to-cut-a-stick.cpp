@@ -16,16 +16,16 @@ public:
         a.insert(a.begin(),0);
         a.push_back(n);
         int sz=a.size();
-        vector<vector<ll>> dp(sz,vector<ll>(sz,-1));
-        return func(0,sz-1,a,dp);
+        vector<vector<ll>> dp(sz,vector<ll>(sz,1e13));
 
-        // for(int i=sz-1; i>=0; i--){
-        //     for(int j=i+1; i<sz; i++){
-        //         for(int k=i; k<j; k++){
-
-        //         }
-        //     }
-        // }
-
+        for(int i=sz-1; i>=0; i--){
+            for(int j=i; j<sz; j++){
+                if(j-i<=1) dp[i][j]=0;
+                for(int k=i+1; k<j; k++){
+                    dp[i][j]=min(dp[i][j],dp[i][k]+dp[k][j]+a[j]-a[i]);
+                }
+            }
+        }
+        return dp[0][sz-1];
     }
 };
