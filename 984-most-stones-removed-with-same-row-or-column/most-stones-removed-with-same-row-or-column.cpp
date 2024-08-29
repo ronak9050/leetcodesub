@@ -30,9 +30,7 @@ class DSU{
         int n=par.size()-1;
         vector<int> ct(n+1,0);
         for(int i=0; i<n; i++){
-            findpar(i);
-            ct[par[i]]++;
-            cout<<par[i]<<" ";
+            ct[findpar(i)]++;
         }
         int ans=0;
         for(int i=0; i<n; i++){
@@ -48,28 +46,28 @@ public:
     int removeStones(vector<vector<int>>& a) {
         int n=a.size();
         DSU ds(n);
-        for(int i=0;  i<n; i++){
-            for(int j=0; j<n; j++){
-                if(a[i][0]==a[j][0] || a[i][1]==a[j][1]) ds.unite(i,j);
+        // for(int i=0;  i<n; i++){
+        //     for(int j=0; j<n; j++){
+        //         if(a[i][0]==a[j][0] || a[i][1]==a[j][1]) ds.unite(i,j);
+        //     }
+        // }
+        vector<vector<int>> row(1e4+1),col(1e4+1);
+        for(int i=0; i<n; i++){
+            row[a[i][0]].push_back(i);
+            col[a[i][1]].push_back(i);
+        }
+        for(int i=0; i<1e4+1; i++){
+            if(row[i].size()>1){
+                for(int j=0; j<row[i].size()-1; j++){
+                    ds.unite(row[i][j],row[i][j+1]);
+                }
+            }
+            if(col[i].size()>1){
+                for(int j=0; j<col[i].size()-1; j++){
+                    ds.unite(col[i][j],col[i][j+1]);
+                }
             }
         }
-        // vector<vector<int>> row(1e4+1),col(1e4+1);
-        // for(int i=0; i<n; i++){
-        //     row[a[i][0]].push_back(i);
-        //     col[a[i][1]].push_back(i);
-        // }
-        // for(int i=0; i<1e4+1; i++){
-        //     if(row[i].size()>1){
-        //         for(int j=0; j<row[i].size()-1; j++){
-        //             ds.unite(row[i][j],row[i][j+1]);
-        //         }
-        //     }
-        //     if(col[i].size()>1){
-        //         for(int j=0; j<col[i].size()-1; j++){
-        //             ds.unite(col[i][j],col[i][j+1]);
-        //         }
-        //     }
-        // }
         return ds.finder();
     }
 };
