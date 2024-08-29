@@ -46,26 +46,19 @@ public:
     int removeStones(vector<vector<int>>& a) {
         int n=a.size();
         DSU ds(n);
-        // for(int i=0;  i<n; i++){
-        //     for(int j=0; j<n; j++){
-        //         if(a[i][0]==a[j][0] || a[i][1]==a[j][1]) ds.unite(i,j);
-        //     }
-        // }
-        vector<vector<int>> row(1e4+1),col(1e4+1);
+        unordered_map<int,vector<int>> row,col;
         for(int i=0; i<n; i++){
             row[a[i][0]].push_back(i);
             col[a[i][1]].push_back(i);
         }
-        for(int i=0; i<1e4+1; i++){
-            if(row[i].size()>1){
-                for(int j=0; j<row[i].size()-1; j++){
-                    ds.unite(row[i][j],row[i][j+1]);
-                }
+        for(auto &e:row){
+            if(e.second.size()>1){
+                for(int i=0; i<e.second.size()-1; i++) ds.unite(e.second[i],e.second[i+1]);
             }
-            if(col[i].size()>1){
-                for(int j=0; j<col[i].size()-1; j++){
-                    ds.unite(col[i][j],col[i][j+1]);
-                }
+        }
+        for(auto &e:col){
+            if(e.second.size()>1){
+                for(int i=0; i<e.second.size()-1; i++) ds.unite(e.second[i],e.second[i+1]);
             }
         }
         return ds.finder();
