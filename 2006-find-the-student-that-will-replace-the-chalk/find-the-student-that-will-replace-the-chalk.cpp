@@ -3,11 +3,11 @@ class Solution {
 public:
     int chalkReplacer(vector<int>& a, int k) {
         ll sum=accumulate(a.begin(),a.end(),0ll);
-        ll rem=k%sum;
+        k%=sum;
         int n=a.size();
         for(int i=0; i<n; i++){
-            if(a[i]>rem) return i;
-            else rem-=a[i];
+            if(a[i]>k) return i;
+            k-=a[i];
         }
         return 0;
     }
