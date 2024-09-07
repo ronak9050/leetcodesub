@@ -25,18 +25,18 @@ public:
         if(cur==nullptr) return 1;
         if(r==nullptr) return 0;
         if(mp.find({r,cur})!=mp.end()) return mp[{r,cur}];
-        bool ans=0;
-        ans|=func(r->left,h,h,mp);
-        ans|=func(r->right,h,h,mp);
+        
+        if(func(r->left,h,h,mp)) return mp[{r,cur}]=1;
+        if(func(r->right,h,h,mp)) return mp[{r,cur}]=1;
         if(r->val==h->val){
-            ans|=func(r->left,h->next,h,mp);
-            ans|=func(r->right,h->next,h,mp);
+            if(func(r->left,h->next,h,mp)) return mp[{r,cur}]=1;
+            if(func(r->right,h->next,h,mp)) return mp[{r,cur}]=1;
         }
         if(r->val==cur->val && cur!=h){
-            ans|=func(r->left,cur->next,h,mp);
-            ans|=func(r->right,cur->next,h,mp);
+            if(func(r->left,cur->next,h,mp)) return mp[{r,cur}]=1;
+            if(func(r->right,cur->next,h,mp)) return mp[{r,cur}]=1;
         }
-        return mp[{r,cur}]=ans;
+        return mp[{r,cur}]=0;
     }
     bool isSubPath(ListNode* head, TreeNode* root) {
         map<pair<TreeNode*,ListNode*>,bool> mp;
