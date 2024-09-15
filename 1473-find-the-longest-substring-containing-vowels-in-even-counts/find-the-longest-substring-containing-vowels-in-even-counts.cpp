@@ -2,15 +2,17 @@ class Solution {
 public:
     int findTheLongestSubstring(string s) {
         int n=s.size();
-        map<int,vector<int>> mp;
+        unordered_map<int,vector<int>> mp;
         int cur=0;
-        map<char,int> pos = {{'a',0},{'e',1},{'i',2},{'o',3},{'u',4}};
+        vector<int> pos(150,0);
+        pos['a']=1;pos['e']=2;pos['i']=3;pos['o']=4;pos['u']=5;
         for(int i=0; i<n; i++){
-            if(pos.find(s[i])!=pos.end()){
+            if(pos[s[i]]){
                 cur=cur^(1<<(pos[s[i]]));
             }
             mp[cur].push_back(i);
         }
+        
         int ans=0;
         for(auto &e:mp){
             if(e.second.size()>1){
