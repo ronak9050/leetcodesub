@@ -9,9 +9,9 @@ public:
             if(pos[s[i]]){
                 cur=cur^(1<<(pos[s[i]]));
             }
-            if(mp[cur]==-1) mp[cur]=i;
-            else ans=max(ans,i-mp[cur]);
             if(cur==0) ans=max(ans,i+1);
+            else if(mp[cur]==-1) mp[cur]=i;
+            else ans=max(ans,i-mp[cur]);
         }
 
         return ans;
