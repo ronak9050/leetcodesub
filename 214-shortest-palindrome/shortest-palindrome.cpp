@@ -22,12 +22,8 @@ public:
         kmp(t,pi);
 
         int ans=n-pi[t.size()-1];
-        // for(int i=n+1; i<t.size(); i++){
-        //     if(pi[i]+i>=t.size()) ans=min(ans,n-pi[i]);
-        // }
         string add=s.substr(n-ans,ans);
         reverse(add.begin(),add.end());
-        string ret=add+s;
-        return ret;
+        return add+s;
     }
 };
