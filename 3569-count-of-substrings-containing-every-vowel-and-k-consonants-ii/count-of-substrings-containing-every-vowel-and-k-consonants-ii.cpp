@@ -10,21 +10,21 @@ public:
 
         vector<int> cmin(n,-1),cmax(n,-1),pos,vmax(n,-1);
         vector<vector<int>> prevpos(6);
-        
+    
+        for(int i=0; i<n; i++){
+            if(mp[s[i]-'a']){
+                prevpos[mp[s[i]-'a']].push_back(i);
+            }
+            int cur=n;
+            for(int j=1; j<6; j++){
+                if(prevpos[j].size()) cur=min(cur,prevpos[j].back());
+                else cur=-1;
+            }
+            vmax[i]=cur;
+        }
 
         if(req){
-            for(int i=0; i<n; i++){
-                if(mp[s[i]-'a']){
-                    prevpos[mp[s[i]-'a']].push_back(i);
-                }
 
-                int cur=n;
-                for(int j=1; j<6; j++){
-                    if(prevpos[j].size()) cur=min(cur,prevpos[j].back());
-                    else cur=-1;
-                }
-                vmax[i]=cur;
-            }
             for(int i=0; i<n; i++){
                 if(!mp[s[i]-'a']){
                     pos.push_back(i);
@@ -44,18 +44,8 @@ public:
         }
         else{
             for(int i=0; i<n; i++){
-                if(mp[s[i]-'a']){
-                    prevpos[mp[s[i]-'a']].push_back(i);
-                }
-                else last=i;
+                if(!mp[s[i]-'a']) last=i;
                 cmin[i]=last;
-
-                int cur=n;
-                for(int j=1; j<6; j++){
-                    if(prevpos[j].size()) cur=min(cur,prevpos[j].back());
-                    else cur=-1;
-                }
-                vmax[i]=cur;
             }
             for(int i=0; i<n; i++) {
                 cout<<cmin[i]<<" "<<vmax[i]<<endl;
