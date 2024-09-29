@@ -1,10 +1,12 @@
-unordered_map<int,int> mp={{0,1},{4,1},{8,1},{14,1},{20,1}};
+
 
 class Solution {
 public:
+    
     int countOfSubstrings(string s, int req) {
         int n=s.size(),ans=0;
-        
+        vector<int> mp(26,0);
+        mp[0]=1;mp[4]=1;mp[8]=1;mp[14]=1;mp[20]=1;
         for(int i=0; i<n; i++){
             vector<int> cur(26,0);
             for(int j=i; j<n; j++){
