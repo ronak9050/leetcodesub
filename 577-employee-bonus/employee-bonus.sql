@@ -1,5 +1,5 @@
-select e.name, sum(b.bonus) as bonus
-from employee e
-left join bonus b on e.empId=b.empId
-group by e.name,e.empId
-having sum(b.bonus)<1000 or bonus is null
+SELECT e.name, SUM(b.bonus) AS bonus
+FROM employee e
+LEFT JOIN bonus b ON e.empId = b.empId
+GROUP BY e.name, e.empId
+HAVING SUM(b.bonus) < 1000 OR SUM(b.bonus) IS NULL;
