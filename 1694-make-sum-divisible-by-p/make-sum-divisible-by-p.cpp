@@ -6,8 +6,9 @@ public:
         int n=a.size();
         ll sum=accumulate(a.begin(),a.end(),0ll);
         if(sum<p) return -1;
+
         ll ans=sum%p? n:0;
-        map<ll,ll> mp;
+        unordered_map<ll,ll> mp;
         mp[0]=-1;
         ll cur=0;
         for(int i=0; i<n; i++){
