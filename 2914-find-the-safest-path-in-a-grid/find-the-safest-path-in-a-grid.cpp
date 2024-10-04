@@ -1,6 +1,6 @@
 class Solution {
 public:
-    vector<vector<int>> moves = {{0,1},{0,-1},{1,0},{-1,0}};
+    vector<pair<int,int>> moves = {{0,1},{0,-1},{1,0},{-1,0}};
 
     int maximumSafenessFactor(vector<vector<int>>& a) {
         int n=a.size();
@@ -21,7 +21,7 @@ public:
             q.pop();
             int i=it[0],j=it[1],t=it[2];
             for(auto &e:moves){
-                int x=i+e[0],y=j+e[1];
+                int x=i+e.first,y=j+e.second;
                 if(x>=0 && y>=0 && x<n && y<n && t+1<fac[x][y]){
                     fac[x][y]=t+1;
                     q.push({x,y,t+1});
@@ -44,7 +44,7 @@ public:
                 q.pop();
                 int x=it.first,y=it.second;
                 for(auto &e:moves){
-                    int i=x+e[0],j=y+e[1];
+                    int i=x+e.first,j=y+e.second;
                     if(i<n && j<n && i>=0 && j>=0 && !vis[i][j] && pos[i][j]){
                         vis[i][j]=1;
                         q.push({i,j});
