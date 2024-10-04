@@ -32,13 +32,13 @@ public:
 
     int longestValidParentheses(string s) {
         int ans=func(s);
-        cout<<s<<endl;
+        // cout<<s<<endl;
         reverse(s.begin(),s.end());
         for(int i=0; i<s.size(); i++){
             if(s[i]=='(') s[i]=')';
             else s[i]='(';
         }
-        cout<<s<<endl;
+        // cout<<s<<endl;
         ans=max(ans,func(s));
         return ans;
     }
