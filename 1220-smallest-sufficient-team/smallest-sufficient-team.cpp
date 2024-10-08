@@ -19,23 +19,12 @@ public:
         
         vector<ll> dp(1<<m,(1ll<<n)-1);
         dp[0]=0;
-        // for(int i=1; i<(1<<m); i++){
-        //     for(int j=0; j<n; j++){
-        //         ll sm = (i & (~a[j]));
-        //         if(sm!=i){
-        //             ll pos = dp[sm]|(1ll<<j);
-        //             if(__builtin_popcount(pos)<__builtin_popcount(dp[i])) dp[i]=pos;
-        //         }
-        //     }
-        // }
-        for (int i = 1; i < (1 << m); i++) {
-            for (int j = 0; j < n; j++) {
-                int smallerSkillsMask = i & ~a[j];
-                if (smallerSkillsMask != i) {
-                    long long peopleMask = dp[smallerSkillsMask] | (1LL << j);
-                    if (__builtin_popcountll(peopleMask) < __builtin_popcountll(dp[i])) {
-                        dp[i] = peopleMask;
-                    }
+        for(int i=1; i<(1<<m); i++){
+            for(int j=0; j<n; j++){
+                ll sm = (i & (~a[j]));
+                if(sm!=i){
+                    ll pos = dp[sm]|(1ll<<j);
+                    if(__builtin_popcountll(pos)<__builtin_popcountll(dp[i])) dp[i]=pos;
                 }
             }
         }
