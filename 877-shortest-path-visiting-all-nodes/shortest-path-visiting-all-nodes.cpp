@@ -3,6 +3,7 @@ public:
 
     int bfs(vector<vector<int>>&g){
         int n=g.size();
+        if(g.size()==1 && g[0].size()==0) return 0;
         map<pair<int,int>,bool> mp;
         queue<pair<int,int>> q;
         for(int i=0; i<n; i++){
@@ -18,9 +19,9 @@ public:
                 auto it=q.front();
                 q.pop();
                 int cur=it.first,mask=it.second;
-                if(mask==end) return lvl;
                 for(auto e:g[cur]){
                     if(!mp[{e,mask|(1<<e)}]){
+                        if((mask|(1<<e))==end) return lvl+1;
                         mp[{e,mask|(1<<e)}]=1;
                         q.push({e,mask|(1<<e)});
                     }
