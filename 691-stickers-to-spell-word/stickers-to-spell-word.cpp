@@ -8,10 +8,8 @@ public:
 
     int func(int ind,int mask,string &t,vector<string> &s){
         int n=t.size(),m=s.size();
-        if(ind>=m){
-            if(mask==(1<<n)-1) return 0;
-            return 100;
-        }
+        if(mask==(1<<n)-1) return 0;
+        if(ind>=m) return 100;
         if(dp[ind][mask]!=-1) return dp[ind][mask];
         int ans=func(ind+1,mask,t,s);
         vector<int> ct(26,0);
