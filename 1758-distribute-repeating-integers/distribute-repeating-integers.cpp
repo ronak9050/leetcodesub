@@ -16,6 +16,7 @@ public:
                     if(cur&(1<<j)) sum+=q[j];
                 }
                 if(sum<=ct[ind]) ans|=check(ind+1,mask|i,ct,q);
+                if(ans) return dp[ind][mask]=1;
             }
         }
 
