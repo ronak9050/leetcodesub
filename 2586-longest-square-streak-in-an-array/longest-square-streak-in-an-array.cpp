@@ -13,8 +13,8 @@ public:
         sort(a.begin(),a.end());
         vector<int> ct(1e5+1,0),ans(1e5+1,-1);
         for(auto e:a) ct[e]++;
-        for(int i=2; i<=1e5; i++){
-            if(ct[i]) func(i,ct,ans);
+        for(auto e:a){
+            func(e,ct,ans);
         }
         return mx>1? mx:-1;
     }
