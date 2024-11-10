@@ -9,29 +9,31 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution {
+class Solution{
 public:
-    int func1(TreeNode* r,map<TreeNode*,pair<int,int>> &mp1){
-        if(r==nullptr) return 0;
-        mp1[r]={func1(r->left,mp1),func1(r->right,mp1)};
-        return mp1[r].first+mp1[r].second+1;
-    }
-    int func2(TreeNode* r,map<TreeNode*,pair<int,int>> &mp1){
-        if(r==nullptr) return 0;
-        mp1[r]={func2(r->left,mp1),func2(r->right,mp1)};
-        return mp1[r].first+mp1[r].second+r->val;
+    map<TreeNode*,int> ct;
+    map<TreeNode*,int> ch;
+
+// counting number of coins and children in given subtree
+    pair<int,int> dfs(TreeNode* root){
+        if(root==nullptr) return {0,0};
+        auto l=dfs(root->left);
+        auto r=dfs(root->right);
+        ct[root]=root->val+l.first+r.first;
+        ch[root]=1+l.second+r.second;
+        return {ct[root],ch[root]};
     }
 
-    int dfs(TreeNode* r,map<TreeNode*,pair<int,int>> &mp1,map<TreeNode*,pair<int,int>> &mp2){
-        if(r==nullptr) return 0;
-        int ans=dfs(r->left,mp1,mp2)+dfs(r->right,mp1,mp2);
-        return ans+abs(mp1[r].first-mp2[r].first)+abs(mp1[r].second-mp2[r].second);
+// calculating value for each node --> coin move required from parents (if any)
+    int func(TreeNode* root){
+        if(root==nullptr) return 0;
+        int ans=func(root->left);
+        ans+=func(root->right);
+        return ans+abs(ct[root]-ch[root]);
     }
 
-    int distributeCoins(TreeNode* root) {
-        map<TreeNode*,pair<int,int>> mp1,mp2;
-        func1(root,mp1);
-        func2(root,mp2);
-        return dfs(root,mp1,mp2);
+    int distributeCoins(TreeNode* root){
+        dfs(root);
+        return func(root);
     }
 };
