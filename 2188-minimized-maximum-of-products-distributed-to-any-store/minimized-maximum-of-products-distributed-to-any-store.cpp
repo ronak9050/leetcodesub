@@ -1,19 +1,14 @@
 class Solution {
 public:
-    bool check(int mid,int n,vector<int> a){
-        int m=a.size();
-        for(int i=0,j=0; i<n; i++){
-            if(j==m) return 1;
-            if(a[j]<=mid) j++;
-            else a[j]-=mid;
-            if(j==m) return 1;
-        }
-        return 0;
+    bool check(int mid,int n,vector<int> &a){
+        long ct=0;
+        for(int i=0; i<a.size(); i++) ct+=ceil(a[i]*1.0/mid);
+        return ct<=n;
     }
 
     int minimizedMaximum(int n, vector<int>& a) {
         int m=a.size();
-        int l=0,h=INT_MAX,ans=INT_MAX;
+        int l=1,h=INT_MAX,ans=INT_MAX;
         while(l<=h){
             int mid=l+(h-l)/2;
             if(check(mid,n,a)){
