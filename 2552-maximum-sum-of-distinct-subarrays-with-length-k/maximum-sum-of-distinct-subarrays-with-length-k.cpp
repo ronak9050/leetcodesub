@@ -21,7 +21,6 @@ public:
             if(mp[a[i]]) ct++;
             mp[a[i]]++;
             sum=sum+a[i]-a[i-k];
-            cout<<ct<<" "<<sum<<endl;
             if(!ct) ans=max(ans,sum);
         }
 
