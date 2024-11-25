@@ -7,13 +7,13 @@ public:
         map<vector<vector<int>>,bool> mp;
         mp[a]=1;
         vector<vector<int>> end={{1,2,3},{4,5,0}};
+        if(a==end) return 0;
         vector<vector<int>> moves={{0,1},{0,-1},{1,0},{-1,0}};
         while(q.size()){
             auto it=q.front();
             q.pop();
             int mov=it.first;
             auto cur=it.second;
-            if(cur==end) return mov;
 
             int indi,indj;
             for(int i=0; i<2; i++){
