@@ -12,7 +12,7 @@
 class Solution {
 public:
     int ct=0;
-    map<TreeNode*,bool> mp;
+    unordered_map<TreeNode*,bool> mp;
     void func(TreeNode* r, TreeNode* par){
         if(r==nullptr || (r->left==nullptr && r->right==nullptr) ) return;
         func(r->left,r);
@@ -23,6 +23,7 @@ public:
             if(par) mp[par]=1;
         }
     }
+
     int minCameraCover(TreeNode* root) {
         func(root,nullptr);
         if(!mp[root]) ct++;
